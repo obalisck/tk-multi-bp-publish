@@ -15,10 +15,12 @@ import tank
 from tank import Hook
 from tank import TankError
 
+
 class PrePublishHook(Hook):
     """
     Single hook that implements pre-publish functionality
     """
+
     def execute(self, tasks, work_template, progress_cb, **kwargs):
         """
         Main hook entry point
@@ -70,33 +72,30 @@ class PrePublishHook(Hook):
                                     errors: List
                                             A list of error messages (strings) to report    
                                 }
-        """       
+        """
         results = []
-        
+
         # validate tasks:
         for task in tasks:
             item = task["item"]
             output = task["output"]
             errors = []
-        
+
             # report progress:
             progress_cb(0, "Validating", task)
-        
+
             # pre-publish item here, e.g.
-            #if output["name"] == "foo":
-            #    ...
-            #else:
-            # don't know how to publish this output types!
-            errors.append("Don't know how to publish this item!")        
+            if output["name"] == "jpeg_output":
+                progress_cb(25, "Jpeg Output Ok!", task)
+            else:
+                # don't know how to publish this output types!
+                errors.append("Don't know how to publish this item!")
 
             # if there is anything to report then add to result
             if len(errors) > 0:
                 # add result:
-                results.append({"task":task, "errors":errors})
-                
-            progress_cb(100)
-            
-        return results
+                results.append({"task": task, "errors": errors})
 
-    
-    
+            progress_cb(100)
+
+        return results

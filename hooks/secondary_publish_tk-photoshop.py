@@ -105,7 +105,48 @@ class PublishHook(Hook):
 
             # publish item here, e.g.
             if output["name"] == "jpeg_output":
-                print output["name"]
+
+                progress_cb(25, "Jpeg Output Readying ... ", task)
+
+                # ** Start Export **
+                import photoshop
+
+                doc = photoshop.app.activeDocument
+
+                if doc is None:
+                    raise TankError("There is no currently active document!")
+
+                # get scene path
+                scene_path = doc.fullName.nativePath
+
+                if not work_template.validate(scene_path):
+                    raise TankError("File '%s' is not a valid work path, unable to publish!" % scene_path)
+
+                # use templates to convert to publish path:
+                output = task["output"]
+                fields = work_template.get_fields(scene_path)
+                fields["TankType"] = output["tank_type"]
+                publish_template = output["publish_template"]
+                publish_path = publish_template.apply_fields(fields)
+
+                publish_dir = os.path.dirname(publish_path)
+                publish_name = os.path.basename(publish_path)
+
+                publish_name = publish_name.replace(".psd", ".jpg")
+                final_path = os.path.join(publish_dir, publish_name)
+                progress_cb(25, "Outputing {0}".format(publish_name), task)
+
+                if os.path.exists(final_path):
+                    raise TankError("The published file named '%s' already exists!" % publish_path)
+
+                jpeg_file = photoshop.RemoteObject('flash.filesystem::File', final_path)
+                jpeg_options = photoshop.RemoteObject('com.adobe.photoshop::JPEGSaveOptions')
+                jpeg_options.quality = 10
+
+                # save a copy
+                photoshop.app.activeDocument.saveAs(jpeg_file, jpeg_options, True)
+
+                # ** End Export **
 
             else:
                 pass
