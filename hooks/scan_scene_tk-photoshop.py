@@ -15,11 +15,12 @@ import tank
 from tank import Hook
 from tank import TankError
 
+
 class ScanSceneHook(Hook):
     """
     Hook to scan scene for items to publish
     """
-    
+
     def execute(self, **kwargs):
         """
         Main hook entry point
@@ -52,18 +53,18 @@ class ScanSceneHook(Hook):
                                             Optional dictionary that will be passed to the
                                             pre-publish and publish hooks
                         }
-        """   
-                
+        """
+
         items = []
-        
+
         # get the main scene:
         doc = photoshop.app.activeDocument
         if doc is None:
             raise TankError("There is no currently active document!")
-        
+
         if not doc.saved:
             raise TankError("Please Save your file before Publishing")
-        
+
         scene_path = doc.fullName.nativePath
         name = os.path.basename(scene_path)
 

@@ -16,11 +16,14 @@ import tank
 from tank import Hook
 from tank import TankError
 
+
 class PublishHook(Hook):
     """
     Single hook that implements publish functionality for secondary tasks
-    """    
-    def execute(self, tasks, work_template, comment, thumbnail_path, sg_task, primary_task, primary_publish_path, progress_cb, **kwargs):
+    """
+
+    def execute(self, tasks, work_template, comment, thumbnail_path, sg_task, primary_task, primary_publish_path,
+                progress_cb, **kwargs):
         """
         Main hook entry point
         :param tasks:                   List of secondary tasks to be published.  Each task is a 
@@ -90,30 +93,30 @@ class PublishHook(Hook):
                                         }
         """
         results = []
-        
+
         # publish all tasks:
         for task in tasks:
             item = task["item"]
             output = task["output"]
             errors = []
-        
+
             # report progress:
             progress_cb(0, "Publishing", task)
-        
+
             # publish item here, e.g.
-            #if output["name"] == "foo":
+            # if output["name"] == "foo":
             #    ...
             #else:
             # don't know how to publish this output types!
-            errors.append("Don't know how to publish this item!")   
+            errors.append("Don't know how to publish this item!")
 
             # if there is anything to report then add to result
             if len(errors) > 0:
                 # add result:
-                results.append({"task":task, "errors":errors})
-             
+                results.append({"task": task, "errors": errors})
+
             progress_cb(100)
-             
+
         return results
 
 
