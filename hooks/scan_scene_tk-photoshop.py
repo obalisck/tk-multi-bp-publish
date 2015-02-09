@@ -69,5 +69,6 @@ class ScanSceneHook(Hook):
 
         # create the primary item - this will match the primary output 'scene_item_type':            
         items.append({"type": "work_file", "name": name})
+        items.append({"type": "jpeg_output", "name": name})
 
         return items
