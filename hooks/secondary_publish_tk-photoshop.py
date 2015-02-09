@@ -104,11 +104,13 @@ class PublishHook(Hook):
             progress_cb(0, "Publishing", task)
 
             # publish item here, e.g.
-            # if output["name"] == "foo":
-            #    ...
-            #else:
+            if output["name"] == "jpeg_output":
+                print output["name"]
+
+            else:
+                pass
             # don't know how to publish this output types!
-            errors.append("Don't know how to publish this item!")
+                errors.append("Don't know how to publish this item!")
 
             # if there is anything to report then add to result
             if len(errors) > 0:
