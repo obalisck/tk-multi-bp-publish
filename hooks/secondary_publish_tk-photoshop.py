@@ -120,7 +120,8 @@ class PublishHook(Hook):
                 scene_path = doc.fullName.nativePath
 
                 if not work_template.validate(scene_path):
-                    raise TankError("File '%s' is not a valid work path, unable to publish!" % scene_path)
+                    raise TankError("Secondary_publish_tk_photoshop Error:: File '%s' is not a valid work path, " +
+                                    "unable to publish!" % scene_path)
 
                 # use templates to convert to publish path:
                 output = task["output"]
@@ -151,9 +152,10 @@ class PublishHook(Hook):
             else:
                 pass
             # don't know how to publish this output types!
-                errors.append("Don't know how to publish this item!, parameters are: item_name: {0}, item_type: {1}, "
-                              + "output_name: {2}, output_tank_tyhpe: {3}".format(item['name'], item['type'],
-                                                                                  output['name'], output['tank_type']))
+                errors.append("Secondary_publish_tk_photoshop Error:: Don't know how to publish this item!, " +
+                              "parameters are: item_name: {0}, item_type: {1}, output_name: {2}, " +
+                              "output_tank_tyhpe: {3}".format(item['name'], item['type'],
+                                                              output['name'], output['tank_type']))
 
             # if there is anything to report then add to result
             if len(errors) > 0:

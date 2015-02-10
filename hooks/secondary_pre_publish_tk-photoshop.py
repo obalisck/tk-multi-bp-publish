@@ -85,11 +85,11 @@ class PrePublishHook(Hook):
             progress_cb(0, "Validating", task)
 
             # pre-publish item here, e.g.
-            if output["name"] == "jpeg_output":
-                progress_cb(25, "Jpeg Output Ok!", task)
+            if output["name"] == "concept_jpeg":
+                progress_cb(25, "Jpeg Output Checked, continue ...", task)
             else:
                 # don't know how to publish this output types!
-                errors.append("Don't know how to publish this item!")
+                errors.append("Secondary_pre_publish Error:: Jpeg output is not validated!!")
 
             # if there is anything to report then add to result
             if len(errors) > 0:
