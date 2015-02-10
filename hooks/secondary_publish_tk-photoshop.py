@@ -134,7 +134,7 @@ class PublishHook(Hook):
 
                 publish_name = publish_name.replace(".psd", ".jpg")
                 final_path = os.path.join(publish_dir, publish_name)
-                progress_cb(25, "Outputing {0}".format(publish_name), task)
+                progress_cb(25, "Outputing Jpeg File: {0}".format(publish_name), task)
 
                 if os.path.exists(final_path):
                     raise TankError("The published file named '%s' already exists!" % publish_path)
